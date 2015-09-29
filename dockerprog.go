@@ -4,6 +4,7 @@ import
 (
     "fmt"
     "os/exec"
+    "os"
     "sync"
     "flag"
 )
@@ -43,6 +44,8 @@ func godep() {
 }
 
 func main() {
+    os.Chdir("/app")
+    build()
     var param = flag.String("value", "default", "try")
     flag.Parse()
     fmt.Println(*param)
