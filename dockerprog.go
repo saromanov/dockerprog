@@ -55,9 +55,19 @@ func gotest() {
     fmt.Println(string(result))
 }
 
+func gotestcover() {
+    fmt.Println("TESTS AND COVER")
+    goget("golang.org/x/tools/cover")
+    result, err := exec.Command("go", "test", "-cover").Output()
+    if err != nil {
+        fmt.Printf("Found error %v\n", err)
+    }
+
+    fmt.Println(string(result))
+}
+
 func main() {
     os.Chdir("/app")
-    gotest()
     build()
     var param = flag.String("value", "default", "try")
     flag.Parse()
