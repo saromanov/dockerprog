@@ -7,6 +7,7 @@ import
     "os"
     "sync"
     "flag"
+    "strings"
 )
 
 func goget(target string) {
@@ -62,14 +63,34 @@ func gotestcover() {
     if err != nil {
         fmt.Printf("Found error %v\n", err)
     }
-
     fmt.Println(string(result))
+}
+
+
+func parsing() {
+    var param = flag.String("process", "test,build", "build project")
+    flag.Parse()
+    items := strings.Split(*param, ",")
+    if len(items) == 0 {
+        fmt.Printf("Error in the parsing of arguments")
+        return
+    }
+
+    for _, command := range items {
+        switch command {
+           case "build":
+             build()
+           case "test":
+             gotest()
+           case "cover":
+             gotestcover()
+           case "godep":
+             godep()
+        }
+    }
 }
 
 func main() {
     os.Chdir("/app")
-    build()
-    var param = flag.String("value", "default", "try")
-    flag.Parse()
-    fmt.Println(*param)
+    parsing()
 }
