@@ -33,6 +33,8 @@ func build() {
     if err != nil {
         fmt.Printf("Found error %v\n", err)
     }
+
+    fmt.Println("Successful build")
 }
 
 func godep() {
@@ -43,8 +45,19 @@ func godep() {
     }
 }
 
+func gotest() {
+    fmt.Println("TESTS: ")
+    result, err := exec.Command("go", "test").Output()
+    if err != nil {
+        fmt.Printf("Found error %v\n", err)
+    }
+
+    fmt.Println(string(result))
+}
+
 func main() {
     os.Chdir("/app")
+    gotest()
     build()
     var param = flag.String("value", "default", "try")
     flag.Parse()
